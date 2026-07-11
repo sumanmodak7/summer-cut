@@ -1,0 +1,702 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Summer Cut</title>
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Summer Cut" />
+<meta name="theme-color" content="#f5f5f7" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
+<link rel="manifest" href="manifest.json" />
+<link rel="apple-touch-icon" href="icon-180.png" />
+<style>
+  :root{
+    --bg:#f5f5f7; --card:#ffffff; --card2:#fafafc; --text:#1d1d1f; --muted:#86868b;
+    --line:#e8e8ed; --fill:#eeeef1; --segActive:#ffffff;
+    --blue:#0071e3; --green:#34c759; --orange:#ff9500; --red:#ff3b30; --teal:#30b0c7; --indigo:#5856d6;
+    --shadow:0 1px 3px rgba(0,0,0,.06),0 8px 24px rgba(0,0,0,.05);
+    --shadow-sm:0 1px 4px rgba(0,0,0,.10);
+  }
+  [data-theme="dark"]{
+    --bg:#000000; --card:#1c1c1e; --card2:#242426; --text:#f5f5f7; --muted:#98989d;
+    --line:#2c2c2e; --fill:#2c2c2e; --segActive:#636366;
+    --blue:#0a84ff; --green:#30d158; --orange:#ff9f0a; --red:#ff453a; --teal:#40c8e0; --indigo:#5e5ce6;
+    --shadow:0 1px 3px rgba(0,0,0,.4);
+    --shadow-sm:0 1px 4px rgba(0,0,0,.5);
+  }
+  *{box-sizing:border-box;-webkit-font-smoothing:antialiased}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);color:var(--text);line-height:1.47;transition:background .35s,color .35s}
+  header{padding:28px 24px 14px;max-width:1060px;margin:0 auto}
+  .topline{display:flex;justify-content:space-between;align-items:flex-start}
+  h1{margin:0;font-size:32px;font-weight:700;letter-spacing:-.022em}
+  .sub{color:var(--muted);font-size:14px;margin-top:2px;font-weight:500}
+  /* theme switch */
+  .switch{width:58px;height:32px;border-radius:16px;background:var(--fill);position:relative;cursor:pointer;border:none;padding:0;flex:none;transition:background .35s}
+  .switch .knob{position:absolute;top:3px;left:3px;width:26px;height:26px;border-radius:50%;background:var(--card);box-shadow:var(--shadow-sm);
+    transition:left .28s cubic-bezier(.3,.9,.4,1.2);display:flex;align-items:center;justify-content:center;font-size:13px}
+  [data-theme="dark"] .switch .knob{left:29px}
+  /* segmented nav */
+  .seg{display:inline-flex;background:var(--fill);border-radius:12px;padding:3px;gap:2px;flex-wrap:wrap;transition:background .35s}
+  .seg button{border:none;background:transparent;padding:7px 15px;border-radius:9px;font-weight:600;font-size:13.5px;color:var(--muted);cursor:pointer;font-family:inherit;transition:color .2s}
+  .seg button:hover{color:var(--text)}
+  .seg button.active{background:var(--segActive);color:var(--text);box-shadow:var(--shadow-sm)}
+  nav.seg{margin-top:18px}
+  main{padding:10px 24px 90px;max-width:1060px;margin:0 auto}
+  .tab{display:none}.tab.active{display:block;animation:fade .25s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+  /* cards */
+  .card{background:var(--card);border-radius:18px;padding:20px;box-shadow:var(--shadow);margin-bottom:16px;transition:background .35s}
+  .card h2{margin:0 0 12px;font-size:19px;font-weight:700;letter-spacing:-.02em}
+  .grid{display:grid;gap:14px}
+  .stats{grid-template-columns:repeat(auto-fit,minmax(148px,1fr));margin:16px 0}
+  .stat{background:var(--card);border-radius:16px;padding:16px;box-shadow:var(--shadow);transition:background .35s}
+  .stat .k{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+  .stat .v{font-size:24px;font-weight:700;letter-spacing:-.02em;margin-top:4px}
+  .stat .v small{font-size:13px;color:var(--muted);font-weight:500}
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:700px){.split{grid-template-columns:1fr}}
+  /* chips */
+  .chips{display:flex;gap:8px;flex-wrap:wrap}
+  .chip{background:var(--fill);border-radius:999px;padding:6px 13px;font-size:13px;font-weight:600;transition:background .35s}
+  /* tables */
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line)}
+  th{color:var(--muted);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.05em}
+  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+  tr:last-child td{border-bottom:none}
+  /* forms */
+  input,select{background:var(--fill);border:1px solid transparent;color:var(--text);border-radius:10px;padding:10px 12px;font-size:14px;font-family:inherit;width:100%;transition:background .35s}
+  input:focus,select:focus{outline:none;border-color:var(--blue);background:var(--card)}
+  label{display:block;font-size:11px;color:var(--muted);margin-bottom:5px;font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+  .formrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(108px,1fr));gap:12px;align-items:end}
+  .btn{background:var(--blue);color:#fff;border:none;border-radius:11px;padding:10px 20px;font-weight:600;cursor:pointer;font-size:14px;font-family:inherit}
+  .btn:hover{filter:brightness(1.08)}
+  .btn.gray{background:var(--fill);color:var(--text)}
+  .mini{background:none;border:none;cursor:pointer;font-size:12.5px;font-weight:600;font-family:inherit;padding:2px 6px}
+  .mini.blue{color:var(--blue)} .mini.red{color:var(--red)}
+  /* pills */
+  .pill{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:700}
+  .pill.lift{background:color-mix(in srgb,var(--blue) 14%,transparent);color:var(--blue)}
+  .pill.run{background:color-mix(in srgb,var(--red) 14%,transparent);color:var(--red)}
+  .pill.move{background:color-mix(in srgb,var(--green) 16%,transparent);color:var(--green)}
+  .pill.rest{background:var(--fill);color:var(--muted)}
+  .pill.dose{background:color-mix(in srgb,var(--indigo) 14%,transparent);color:var(--indigo)}
+  .pill.groc{background:color-mix(in srgb,var(--orange) 16%,transparent);color:var(--orange)}
+  .pill.trav{background:color-mix(in srgb,var(--teal) 15%,transparent);color:var(--teal)}
+  .snk{border-top:1px solid var(--line);margin-top:7px;padding-top:5px}
+  /* checklist */
+  .check{display:flex;gap:12px;align-items:center;padding:10px 2px;border-bottom:1px solid var(--line)}
+  .check:last-child{border:none}
+  .check input{width:22px;height:22px;accent-color:var(--green);flex:none;margin:0}
+  .check label{margin:0;font-size:14.5px;color:var(--text);text-transform:none;letter-spacing:0;font-weight:500;cursor:pointer}
+  .check.done label{color:var(--muted);text-decoration:line-through}
+  .muted{color:var(--muted)}
+  .foot{font-size:12px;color:var(--muted);margin-top:10px}
+  canvas{width:100%;height:auto;display:block}
+  /* day / meal cards */
+  .days{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(236px,1fr))}
+  .day{background:var(--card2);border:1px solid var(--line);border-radius:14px;padding:13px 14px;transition:background .35s}
+  .day .dh{display:flex;justify-content:space-between;align-items:center;font-weight:700;font-size:14px;margin-bottom:8px}
+  .day .today-dot{outline:2px solid var(--blue)}
+  .mrow{display:flex;gap:8px;font-size:12.5px;padding:3px 0;align-items:baseline}
+  .mrow .mt{flex:none;width:16px;font-weight:700;color:var(--muted);font-size:11px}
+  .mrow .mn{flex:1}
+  .mrow .mc{flex:none;color:var(--muted);font-size:11px;font-variant-numeric:tabular-nums}
+  .dtotal{margin-top:8px;padding-top:8px;border-top:1px solid var(--line);font-size:12px;font-weight:600;color:var(--muted)}
+  .day.today{outline:2px solid var(--blue)}
+  /* workout week */
+  .wk{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(210px,1fr))}
+  .ring-wrap{display:flex;align-items:center;gap:18px}
+  .banner{background:color-mix(in srgb,var(--orange) 10%,transparent);border-radius:12px;padding:11px 14px;font-size:13.5px;font-weight:600;margin-bottom:14px}
+  ul.tight{margin:0;padding-left:2px;list-style:none}
+  ul.tight li{padding:5px 0;font-size:14px}
+  .sup-item{display:flex;justify-content:space-between;gap:10px;font-size:14px;padding:6px 0}
+  .sup-item span:last-child{color:var(--muted);font-size:12.5px}
+  .x2{font-size:10px;font-weight:800;color:var(--indigo);background:color-mix(in srgb,var(--indigo) 13%,transparent);border-radius:5px;padding:1px 6px;margin-left:4px;vertical-align:1px}
+  /* mobile / PWA */
+  @media(max-width:600px){
+    header{padding:calc(14px + env(safe-area-inset-top)) 16px 10px}
+    h1{font-size:26px}
+    main{padding:6px 14px calc(70px + env(safe-area-inset-bottom))}
+    .card{padding:16px;border-radius:16px}
+    .seg button{padding:7px 11px;font-size:12.5px}
+    .stats{grid-template-columns:repeat(2,1fr)}
+    .stat:first-child{grid-row:auto;grid-column:span 2}
+  }
+  @media(display-mode:standalone){body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}}
+</style>
+</head>
+<body>
+<header>
+  <div class="topline">
+    <div>
+      <h1>Summer Cut</h1>
+      <div class="sub">215 → 165 lbs · <span id="daysIn"></span></div>
+    </div>
+    <button class="switch" id="themeSwitch" title="Light / Dark"><span class="knob" id="knob">☀️</span></button>
+  </div>
+  <nav class="seg" id="mainNav">
+    <button data-tab="overview" class="active">Summary</button>
+    <button data-tab="log">Log</button>
+    <button data-tab="workout">Workouts</button>
+    <button data-tab="supps">Supplements</button>
+    <button data-tab="meals">Meals</button>
+    <button data-tab="todos">Weekly</button>
+  </nav>
+</header>
+<main>
+
+<!-- ============ SUMMARY ============ -->
+<section class="tab active" id="overview">
+  <div class="grid stats">
+    <div class="stat" style="grid-row:span 2;display:flex;flex-direction:column;justify-content:center;align-items:center">
+      <svg viewBox="0 0 120 120" width="116" height="116">
+        <circle cx="60" cy="60" r="52" fill="none" stroke="var(--fill)" stroke-width="11"/>
+        <circle id="ringFg" cx="60" cy="60" r="52" fill="none" stroke="var(--green)" stroke-width="11"
+          stroke-linecap="round" stroke-dasharray="326.7" stroke-dashoffset="326.7"
+          transform="rotate(-90 60 60)" style="transition:stroke-dashoffset .8s ease"/>
+        <text id="ringPct" x="60" y="58" text-anchor="middle" font-size="22" font-weight="700" fill="var(--text)">0%</text>
+        <text x="60" y="76" text-anchor="middle" font-size="10" fill="var(--muted)">TO GOAL</text>
+      </svg>
+    </div>
+    <div class="stat"><div class="k">Weight</div><div class="v" id="statCurrent">215 <small>lb</small></div></div>
+    <div class="stat"><div class="k">Lost</div><div class="v" id="statLost">0 <small>lb</small></div></div>
+    <div class="stat"><div class="k">To Go</div><div class="v" id="statRemain">50 <small>lb</small></div></div>
+    <div class="stat"><div class="k">Pace</div><div class="v" id="statRate">— <small>lb/wk</small></div></div>
+    <div class="stat"><div class="k">Next Dose</div><div class="v" id="statReta" style="font-size:17px">—</div></div>
+    <div class="stat"><div class="k">Goal ETA</div><div class="v" id="statProj" style="font-size:17px">—</div></div>
+  </div>
+
+  <div class="card">
+    <h2>Trend</h2>
+    <canvas id="chart" width="1000" height="360"></canvas>
+    <div class="foot"><span style="color:var(--blue)">●</span> Actual &nbsp; <span style="color:var(--green)">▬</span> 6-mo pace &nbsp; <span style="color:var(--orange)">▬</span> 4-mo pace</div>
+  </div>
+
+  <div class="card">
+    <h2>The Rules</h2>
+    <div class="chips">
+      <span class="chip">🍽 2 meals · 12–8pm</span>
+      <span class="chip">🎯 1,000–1,200 cal</span>
+      <span class="chip">🥩 Protein first</span>
+      <span class="chip">🏋️ Lift ×4</span>
+      <span class="chip">👟 10–15k steps daily</span>
+      <span class="chip">🏃 1 run / wk</span>
+      <span class="chip">💉 Reta Thursdays</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LOG ============ -->
+<section class="tab" id="log">
+  <div class="card">
+    <h2>Log Today</h2>
+    <div class="formrow">
+      <div><label>Date</label><input type="date" id="fDate"></div>
+      <div><label>Weight</label><input type="number" step="0.1" id="fWeight" placeholder="214.5"></div>
+      <div><label>Calories</label><input type="number" id="fCal" placeholder="1150"></div>
+      <div><label>Protein g</label><input type="number" id="fPro" placeholder="140"></div>
+      <div><label>Steps</label><input type="number" id="fSteps" placeholder="10000"></div>
+      <div><label>Training</label>
+        <select id="fWork">
+          <option value="">—</option>
+          <option>Chest</option>
+          <option>Legs</option>
+          <option>Back</option>
+          <option>Arms + Shoulders</option>
+          <option>Incline Walk</option>
+          <option>Run (VO2)</option>
+          <option>Light</option>
+        </select>
+      </div>
+    </div>
+    <div style="margin-top:12px"><label>Notes</label><input type="text" id="fNotes" placeholder="Energy, hunger, dose day…"></div>
+    <div style="margin-top:14px;display:flex;gap:10px">
+      <button class="btn" onclick="saveLog()">Save</button>
+      <button class="btn gray" onclick="clearForm()">Clear</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 style="display:flex;justify-content:space-between;align-items:center">History
+      <span>
+        <button class="btn gray" style="padding:7px 14px;font-size:13px" onclick="exportData()">Export</button>
+        <button class="btn gray" style="padding:7px 14px;font-size:13px" onclick="document.getElementById('importFile').click()">Import</button>
+        <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">
+      </span>
+    </h2>
+    <div style="overflow-x:auto">
+      <table id="logTable">
+        <thead><tr><th>Date</th><th class="num">Weight</th><th class="num">Cal</th><th class="num">Pro</th><th class="num">Steps</th><th>Training</th><th>Notes</th><th></th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div id="emptyLog" class="muted" style="padding:12px 0;font-size:14px">No entries yet — log 215 to anchor the chart.</div>
+  </div>
+</section>
+
+<!-- ============ WORKOUTS ============ -->
+<section class="tab" id="workout">
+  <div class="banner">👟 10k steps minimum every day — 15k is the goal.</div>
+  <div class="card">
+    <h2>The Week</h2>
+    <div class="wk">
+      <div class="day"><div class="dh">Mon <span class="pill lift">Lift</span></div><b>Chest</b><div class="muted" style="font-size:12.5px">Bench · Incline DB press · Cable fly · Dips</div></div>
+      <div class="day"><div class="dh">Tue <span class="pill lift">Lift</span></div><b>Legs</b><div class="muted" style="font-size:12.5px">Squat · RDL · Leg press · Calves</div></div>
+      <div class="day"><div class="dh">Wed <span class="pill lift">Lift</span></div><b>Back</b><div class="muted" style="font-size:12.5px">Row · Pull-ups · Lat pulldown · Face pulls</div></div>
+      <div class="day"><div class="dh">Thu <span class="pill move">Walk</span></div><b>Incline Treadmill</b><div class="muted" style="font-size:12.5px">45–60 min · 10–12% grade · Zone 2</div></div>
+      <div class="day"><div class="dh">Fri <span class="pill lift">Lift</span></div><b>Arms + Shoulders</b><div class="muted" style="font-size:12.5px">OHP · Lateral raise · Curls · Triceps pushdown</div></div>
+      <div class="day"><div class="dh">Sat <span class="pill run">Run</span></div><b>VO2</b><div class="muted" style="font-size:12.5px">4×4 min hard / 3 easy, or 30 min steady</div></div>
+      <div class="day"><div class="dh">Sun <span class="pill rest">Light</span></div><b>Easy Day</b><div class="muted" style="font-size:12.5px">Easy walk · mobility · still hit 10k</div></div>
+    </div>
+  </div>
+  <div class="split">
+  <div class="card">
+    <h2>Deficit Rules</h2>
+    <ul class="tight">
+      <li>🎯 Compounds first, 3–4 sets, stop 1–2 reps shy of failure</li>
+      <li>🔁 Holding weight/reps week-to-week = winning</li>
+      <li>⏱ Sessions ≤ 60 min · steps matter more than any single workout</li>
+      <li>🏃 Alternate run weeks: intervals ↔ steady Zone 2–3</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h2>Step Math</h2>
+    <ul class="tight">
+      <li>👟 10k steps ≈ <b>4.5–5 miles</b> · 15k ≈ <b>7–7.5 miles</b></li>
+      <li>🌅 AM walk 40 min ≈ 4–4.5k steps</li>
+      <li>🌆 PM walk 30 min ≈ 3–3.5k steps</li>
+      <li>➕ Daily life fills the rest (~2–3k)</li>
+      <li>💡 Lifting at night (Tue–Thu)? Long walk goes in the AM</li>
+    </ul>
+  </div>
+  </div>
+</section>
+
+<!-- ============ SUPPLEMENTS ============ -->
+<section class="tab" id="supps">
+  <div class="card">
+    <h2>Retatrutide</h2>
+    <div class="sup-item"><span><b>Thursday · once weekly</b> · started Jul 8 · next Jul 16</span><span>rotate abdomen / thigh</span></div>
+    <div class="sup-item"><span>If loss stalls → split to <b>2× half-dose</b> (Wed + Sat)</span><span>same weekly total</span></div>
+    <div class="foot">Follow your titration protocol. Hydrate hard, protein first, eat slow on dose days.</div>
+  </div>
+
+  <div class="split">
+    <div class="card">
+      <h2>🌅 AM</h2><div id="chkAM"></div>
+    </div>
+    <div class="card">
+      <h2>☀️ With Lunch</h2><div id="chkLunch"></div>
+    </div>
+    <div class="card">
+      <h2>🌆 With Dinner</h2><div id="chkDinner"></div>
+    </div>
+    <div class="card">
+      <h2>🌙 Before Sleep</h2><div id="chkSleep"></div>
+    </div>
+  </div>
+  <div class="foot" style="text-align:center">Checklists reset daily · Thursday adds the dose ✓</div>
+</section>
+
+<!-- ============ MEALS ============ -->
+<section class="tab" id="meals">
+  <div class="banner">📌 The Rule: if it's not on here, it doesn't get eaten.</div>
+  <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px">
+    <div class="seg" id="weekSeg"></div>
+    <div class="seg" id="pplSegMeals"></div>
+  </div>
+  <div class="card">
+    <h2 id="weekTitle"></h2>
+    <div class="muted" id="weekSub" style="font-size:13.5px;margin:-6px 0 14px"></div>
+    <div class="days" id="weekDays"></div>
+  </div>
+</section>
+
+<!-- ============ WEEKLY ============ -->
+<section class="tab" id="todos">
+  <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px">
+    <div class="seg" id="todoSeg"></div>
+    <div class="seg" id="pplSegTodos"></div>
+  </div>
+  <div class="split">
+    <div class="card">
+      <h2>✅ Weekly Rhythm</h2>
+      <div id="rhythmChecks"></div>
+    </div>
+    <div class="card">
+      <h2>🛒 Grocery List <span class="muted" style="font-size:13px;font-weight:500" id="grocSub"></span></h2>
+      <div id="grocChecks"></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<script>
+const KEY='summer2026cut';
+const START='2026-07-05', START_W=215, GOAL_W=165, RETA_FIRST='2026-07-16'; // doses weekly on Thursdays; first dose was Wed Jul 8
+const DAY=86400000;
+
+function load(){ try{return JSON.parse(localStorage.getItem(KEY))||{}}catch(e){return {}} }
+function save(){ localStorage.setItem(KEY, JSON.stringify(state)) }
+let state = load();
+state.logs = state.logs || [];
+state.checks = state.checks || {};
+
+const d=s=>new Date(s+'T00:00:00');
+const today=()=>new Date().toISOString().slice(0,10);
+const fmt=dt=>dt.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+const daysBetween=(a,b)=>Math.round((d(b)-d(a))/DAY);
+const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+
+/* ---------- THEME ---------- */
+function applyTheme(t){
+  document.documentElement.dataset.theme=t;
+  localStorage.setItem(KEY+'-theme',t);
+  document.getElementById('knob').textContent = t==='dark'?'🌙':'☀️';
+  drawChart();
+}
+document.getElementById('themeSwitch').onclick=()=>{
+  applyTheme(document.documentElement.dataset.theme==='dark'?'light':'dark');
+};
+
+/* ---------- NAV ---------- */
+document.querySelectorAll('#mainNav button').forEach(b=>{
+  b.onclick=()=>{
+    document.querySelectorAll('#mainNav button').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    document.getElementById(b.dataset.tab).classList.add('active');
+    if(b.dataset.tab==='overview') drawChart();
+  };
+});
+
+/* ---------- DAILY LOG ---------- */
+function saveLog(){
+  const e={
+    date: document.getElementById('fDate').value || today(),
+    weight: parseFloat(document.getElementById('fWeight').value)||null,
+    cal: parseInt(document.getElementById('fCal').value)||null,
+    pro: parseInt(document.getElementById('fPro').value)||null,
+    steps: parseInt(document.getElementById('fSteps').value)||null,
+    work: document.getElementById('fWork').value||'',
+    notes: document.getElementById('fNotes').value||''
+  };
+  const i=state.logs.findIndex(x=>x.date===e.date);
+  if(i>=0) state.logs[i]=e; else state.logs.push(e);
+  state.logs.sort((a,b)=>a.date.localeCompare(b.date));
+  save(); renderLog(); renderStats(); drawChart(); clearForm();
+}
+function clearForm(){
+  ['fWeight','fCal','fPro','fSteps','fNotes'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('fWork').value='';
+  document.getElementById('fDate').value=today();
+}
+function delLog(date){ state.logs=state.logs.filter(x=>x.date!==date); save(); renderLog(); renderStats(); drawChart(); }
+function editLog(date){
+  const e=state.logs.find(x=>x.date===date); if(!e) return;
+  fDate.value=e.date; fWeight.value=e.weight??''; fCal.value=e.cal??''; fPro.value=e.pro??'';
+  fSteps.value=e.steps??''; fWork.value=e.work||''; fNotes.value=e.notes||'';
+  document.querySelector('#mainNav button[data-tab=log]').click();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function pillFor(w){
+  if(!w) return '';
+  if(['Chest','Legs','Back','Arms'].some(x=>w.includes(x))) return `<span class="pill lift">${w}</span>`;
+  if(w.includes('Run')) return `<span class="pill run">${w}</span>`;
+  if(w.includes('Light')||w.includes('Rest')||w.includes('Recovery')) return `<span class="pill rest">${w}</span>`;
+  return `<span class="pill move">${w}</span>`;
+}
+function renderLog(){
+  const tb=document.querySelector('#logTable tbody'); tb.innerHTML='';
+  const rows=[...state.logs].reverse();
+  document.getElementById('emptyLog').style.display=rows.length?'none':'block';
+  rows.forEach(e=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td>${fmt(d(e.date))}</td>
+      <td class="num">${e.weight??'—'}</td><td class="num">${e.cal??'—'}</td>
+      <td class="num">${e.pro??'—'}</td><td class="num">${e.steps?e.steps.toLocaleString():'—'}</td>
+      <td>${pillFor(e.work)}</td><td class="muted" style="font-size:12.5px">${e.notes||''}</td>
+      <td style="text-align:right;white-space:nowrap">
+        <button class="mini blue" onclick="editLog('${e.date}')">Edit</button>
+        <button class="mini red" onclick="delLog('${e.date}')">Del</button></td>`;
+    tb.appendChild(tr);
+  });
+}
+
+/* ---------- STATS ---------- */
+const weighins=()=>state.logs.filter(x=>x.weight!=null);
+function renderStats(){
+  const w=weighins();
+  const cur=w.length?w[w.length-1].weight:START_W;
+  const lost=Math.max(0,+(START_W-cur).toFixed(1));
+  const remain=Math.max(0,+(cur-GOAL_W).toFixed(1));
+  statCurrent.innerHTML=`${cur} <small>lb</small>`;
+  statLost.innerHTML=`${lost} <small>lb</small>`;
+  statRemain.innerHTML=`${remain} <small>lb</small>`;
+
+  const pct=Math.min(1,lost/(START_W-GOAL_W));
+  const C=326.7;
+  document.getElementById('ringFg').style.strokeDashoffset=C*(1-pct);
+  document.getElementById('ringPct').textContent=Math.round(pct*100)+'%';
+
+  let proj='—';
+  if(w.length>=2){
+    const days=daysBetween(w[0].date,w[w.length-1].date);
+    if(days>0){
+      const rate=(w[0].weight-cur)/(days/7);
+      statRate.innerHTML=`${rate.toFixed(1)} <small>lb/wk</small>`;
+      if(rate>0.1) proj=fmt(new Date(d(w[w.length-1].date).getTime()+(remain/rate)*7*DAY));
+    }
+  } else statRate.innerHTML='— <small>lb/wk</small>';
+  statProj.textContent=proj;
+
+  const di=daysBetween(START,today());
+  daysIn.textContent=di>=0?`Day ${di+1}`:'Starts soon';
+
+  let dose=d(RETA_FIRST); const t=d(today());
+  while(dose<t) dose=new Date(dose.getTime()+7*DAY);
+  const dd=Math.round((dose-t)/DAY);
+  statReta.textContent=dd===0?'Today 💉':`${fmt(dose)} · ${dd}d`;
+}
+
+/* ---------- CHART ---------- */
+function drawChart(){
+  const c=document.getElementById('chart'),ctx=c.getContext('2d');
+  const W=c.width,H=c.height,pad={l:44,r:14,t:14,b:26};
+  ctx.clearRect(0,0,W,H);
+  const w=weighins();
+  const x0=d(START).getTime(),xEnd=x0+190*DAY;
+  const yMax=START_W+3,yMin=GOAL_W-3;
+  const X=t=>pad.l+(t-x0)/(xEnd-x0)*(W-pad.l-pad.r);
+  const Y=v=>pad.t+(yMax-v)/(yMax-yMin)*(H-pad.t-pad.b);
+
+  ctx.strokeStyle=css('--line');ctx.fillStyle=css('--muted');ctx.font='11px -apple-system,sans-serif';ctx.textAlign='right';
+  for(let v=170;v<=210;v+=10){
+    ctx.beginPath();ctx.moveTo(pad.l,Y(v));ctx.lineTo(W-pad.r,Y(v));ctx.stroke();
+    ctx.fillText(v,pad.l-7,Y(v)+3.5);
+  }
+  ctx.textAlign='center';
+  for(let m=0;m<=6;m++){
+    const t=x0+m*30.4*DAY;
+    ctx.fillText(new Date(t).toLocaleDateString('en-US',{month:'short'}),X(t),H-7);
+  }
+  const line=(days,color)=>{ctx.strokeStyle=color;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(X(x0),Y(START_W));ctx.lineTo(X(x0+days*DAY),Y(GOAL_W));ctx.stroke();};
+  line(182,css('--green')); line(122,css('--orange'));
+  if(w.length){
+    ctx.strokeStyle=css('--blue');ctx.lineWidth=2.5;ctx.beginPath();
+    w.forEach((e,i)=>{const xx=X(d(e.date).getTime()),yy=Y(e.weight);i?ctx.lineTo(xx,yy):ctx.moveTo(xx,yy);});
+    ctx.stroke();ctx.fillStyle=css('--blue');
+    w.forEach(e=>{ctx.beginPath();ctx.arc(X(d(e.date).getTime()),Y(e.weight),3.5,0,7);ctx.fill();});
+  }
+  ctx.setLineDash([4,4]);ctx.strokeStyle=css('--muted');ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(pad.l,Y(GOAL_W));ctx.lineTo(W-pad.r,Y(GOAL_W));ctx.stroke();ctx.setLineDash([]);
+}
+
+/* ---------- CHECKLISTS ---------- */
+function renderChecks(containerId,items,bucket){
+  const el=document.getElementById(containerId); el.innerHTML='';
+  state.checks[bucket]=state.checks[bucket]||{};
+  items.forEach((label,idx)=>{
+    const done=!!state.checks[bucket][idx];
+    const row=document.createElement('div');
+    row.className='check'+(done?' done':'');
+    const id=containerId+'_'+idx;
+    row.innerHTML=`<input type="checkbox" id="${id}" ${done?'checked':''}><label for="${id}">${label}</label>`;
+    row.querySelector('input').onchange=ev=>{
+      state.checks[bucket][idx]=ev.target.checked; save();
+      row.classList.toggle('done',ev.target.checked);
+    };
+    el.appendChild(row);
+  });
+}
+
+/* ---------- SUPPLEMENTS ---------- */
+function renderSupps(){
+  const dt=today(), isThu=new Date().getDay()===4;
+  renderChecks('chkAM',['Electrolytes','Creatine 5g'],'sAM|'+dt);
+  const lunch=['Vitamin D3 + K2']; if(isThu) lunch.push('💉 Retatrutide (rotate site)');
+  renderChecks('chkLunch',lunch,'sLU|'+dt);
+  renderChecks('chkDinner',['Fish Oil'],'sDN|'+dt);
+  renderChecks('chkSleep',['Magnesium Glycinate'],'sSL|'+dt);
+}
+
+/* ---------- MEAL PLAN ---------- */
+const MEALS={
+  yogurt:{n:'Greek Yogurt Bowl',d:'yogurt · berries · honey · granola · whey',c:400,p:45},
+  chxRice:{n:'Chicken & Rice Bowl',d:'6oz chicken · rice · peppers · hot sauce',c:500,p:55},
+  chxPotato:{n:'Chicken & Crispy Potatoes',d:'6oz chicken · roasted potatoes · green beans',c:530,p:52},
+  chxSalad:{n:'Big Chicken Salad',d:'6oz chicken · greens · egg · light caesar',c:450,p:52},
+  chxFajita:{n:'Chicken Fajita Bowl',d:'6oz chicken · peppers & onions · rice · salsa',c:510,p:52},
+  chxBBQ:{n:'BBQ Chicken & Mash',d:'6oz chicken · bbq glaze · mashed potatoes',c:540,p:54},
+  chxFried:{n:'Chicken Fried Rice',d:'6oz chicken · rice · egg · soy · scallion',c:550,p:52},
+  chxTacos:{n:'Chicken Street Tacos',d:'6oz chicken · 3 corn tortillas · onion · salsa',c:520,p:50},
+  beefTaco:{n:'Beef Taco Bowl',d:'6oz lean beef · rice · salsa · light cheese',c:560,p:48},
+  burger:{n:'Burger Bowl',d:'6oz beef patty · potato wedges · pickles',c:550,p:46},
+  beefRice:{n:'Korean Beef & Rice',d:'6oz lean beef · rice · cucumber · sriracha',c:560,p:46},
+  hash:{n:'Sausage & Potato Hash',d:'turkey sausage · potatoes · peppers · eggs',c:500,p:40},
+  scramble:{n:'Sausage Egg Scramble',d:'turkey sausage · eggs + whites · toast',c:450,p:42},
+  steak:{n:'Steak Night ⭐',d:'8oz sirloin · baked potato · asparagus',c:650,p:55},
+  outSalad:{n:'Salad + Chicken ✈️',d:'restaurant — dressing on the side',c:500,p:45},
+  outSteak:{n:'Steak + Potato ✈️',d:'restaurant — skip bread & apps',c:650,p:50},
+  shake:{n:'Protein Shake',d:'travel snack',c:130,p:25},
+  mShake:{n:'Watermelon + Shake',d:'2 cups watermelon · whey',c:220,p:27},
+  bShake:{n:'Berries + Shake',d:'1 cup berries · whey',c:200,p:27},
+  melon:{n:'Watermelon',d:'2 cups',c:90,p:1}
+};
+// l=lunch, s=snack (optional), dn=dinner, o=office lunch, b=badge
+const PLAN=[
+ {label:'Week 1',range:'Jul 5 – 11',proteins:'Chicken · Ground Beef · 💉 first dose Wed',days:[
+  {dt:'2026-07-05',l:'yogurt',s:'mShake',dn:'chxPotato',b:'groc'},
+  {dt:'2026-07-06',l:'chxSalad',s:'bShake',dn:'beefTaco'},
+  {dt:'2026-07-07',l:'chxRice',o:1,s:'mShake',dn:'burger'},
+  {dt:'2026-07-08',l:'chxRice',o:1,s:'bShake',dn:'chxFajita',b:'dose'},
+  {dt:'2026-07-09',l:'chxRice',o:1,s:'mShake',dn:'beefRice'},
+  {dt:'2026-07-10',l:'yogurt',s:'bShake',dn:'chxFried'},
+  {dt:'2026-07-11',l:'chxSalad',s:'melon',dn:'steak',b:'groc'}]},
+ {label:'Week 2',range:'Jul 12 – 18',proteins:'Chicken · Turkey Sausage · ✈️ Boston Mon–Thu · shopped + cooked Sat night',days:[
+  {dt:'2026-07-12',l:'yogurt',s:'mShake',dn:'chxBBQ'},
+  {dt:'2026-07-13',l:'chxSalad',s:'bShake',dn:'outSteak',b:'trav'},
+  {dt:'2026-07-14',l:'outSalad',s:'shake',dn:'outSteak',b:'trav'},
+  {dt:'2026-07-15',l:'outSalad',s:'shake',dn:'outSteak',b:'trav'},
+  {dt:'2026-07-16',l:'outSalad',s:'shake',dn:'hash',b:'dose'},
+  {dt:'2026-07-17',l:'yogurt',s:'bShake',dn:'chxRice'},
+  {dt:'2026-07-18',l:'chxSalad',s:'mShake',dn:'chxFried'}]},
+ {label:'Week 3',range:'Jul 19 – 25',proteins:'Chicken · Ground Beef · Steak Sat',days:[
+  {dt:'2026-07-19',l:'yogurt',s:'mShake',dn:'chxPotato',b:'groc'},
+  {dt:'2026-07-20',l:'chxSalad',s:'bShake',dn:'beefRice'},
+  {dt:'2026-07-21',l:'beefTaco',o:1,s:'mShake',dn:'chxRice'},
+  {dt:'2026-07-22',l:'beefTaco',o:1,s:'bShake',dn:'chxBBQ'},
+  {dt:'2026-07-23',l:'beefTaco',o:1,s:'mShake',dn:'chxFajita',b:'dose'},
+  {dt:'2026-07-24',l:'yogurt',s:'bShake',dn:'burger'},
+  {dt:'2026-07-25',l:'chxSalad',s:'melon',dn:'steak'}]},
+ {label:'Week 4',range:'Jul 26 – Aug 2',proteins:'Chicken · Turkey Sausage',days:[
+  {dt:'2026-07-26',l:'yogurt',s:'mShake',dn:'chxBBQ',b:'groc'},
+  {dt:'2026-07-27',l:'chxSalad',s:'bShake',dn:'hash'},
+  {dt:'2026-07-28',l:'chxRice',o:1,s:'mShake',dn:'chxTacos'},
+  {dt:'2026-07-29',l:'chxRice',o:1,s:'bShake',dn:'scramble'},
+  {dt:'2026-07-30',l:'chxRice',o:1,s:'mShake',dn:'chxFajita',b:'dose'},
+  {dt:'2026-07-31',l:'yogurt',s:'bShake',dn:'chxFried'},
+  {dt:'2026-08-01',l:'chxSalad',s:'mShake',dn:'chxPotato'},
+  {dt:'2026-08-02',l:'yogurt',s:'mShake',dn:'chxRice',b:'groc'}]}
+];
+// [item, qty for 1, qty for 2] — snacks (watermelon, shakes) never scale
+const GROCERIES=[
+ [['Chicken breast','4 lb','8 lb'],['Lean ground beef 90/10','2 lb','4 lb'],['Sirloin (Sat ⭐)','8 oz','2 × 8 oz'],['Jasmine rice','',''],['Potatoes','3 lb','6 lb'],['Greek yogurt — nonfat','32 oz','64 oz'],['Granola + honey','',''],['Berries','2 pints','3 pints'],['Watermelon','',''],['Whey protein (check stock)','',''],['Eggs','1 dozen','2 dozen'],['Salad greens + romaine','×2','×4'],['Peppers & onions','','×2'],['Green beans + asparagus','','×2'],['Salsa · light cheese · pickles','',''],['Hot sauce · burger sauce','','']],
+ [['Chicken breast','2 lb','4 lb'],['Turkey sausage','1 lb','2 lb'],['Jasmine rice','',''],['Potatoes (incl. mash)','2 lb','4 lb'],['BBQ sauce','',''],['Greek yogurt — nonfat','24 oz','48 oz'],['Granola + honey','',''],['Berries','1 pint','2 pints'],['Watermelon','',''],['Travel protein shakes','',''],['Eggs','½ dozen','1 dozen'],['Salad greens','×1','×2'],['Peppers & onions','','×2'],['Soy sauce + scallions','','']],
+ [['Chicken breast','4 lb','8 lb'],['Lean ground beef 90/10','2.5 lb','5 lb'],['Sirloin (Sat ⭐)','8 oz','2 × 8 oz'],['Jasmine rice','',''],['Potatoes','3 lb','6 lb'],['Greek yogurt — nonfat','32 oz','64 oz'],['Granola + honey','',''],['Berries','2 pints','3 pints'],['Watermelon','',''],['Eggs','1 dozen','2 dozen'],['Salad greens','×2','×4'],['Peppers & onions','','×2'],['BBQ sauce','',''],['Salsa · light cheese · pickles','',''],['Asparagus + green beans','','×2']],
+ [['Chicken breast','5 lb','10 lb'],['Turkey sausage','1.5 lb','3 lb'],['Jasmine rice','',''],['Potatoes (incl. mash)','3 lb','6 lb'],['Corn tortillas','1 pack','2 packs'],['BBQ sauce','',''],['Greek yogurt — nonfat','32 oz','64 oz'],['Granola + honey','',''],['Berries','2 pints','3 pints'],['Watermelon','',''],['Eggs + egg whites','1 dozen + carton','2 dozen + 2 cartons'],['Salad greens','×2','×4'],['Peppers & onions','','×2'],['Soy sauce + scallions','',''],['Green beans','','×2'],['Bread (toast)','','']]
+];
+const RHYTHM=['🛒 Sun — groceries','🍳 Sun — batch-cook Tue–Thu lunches','🏋️ Chest — Mon','🏋️ Legs — Tue','🏋️ Back — Wed','🚶 Incline walk — Thu','🏋️ Arms + Shoulders — Fri','🏃 Run — Sat','💉 Reta dose — Thu (rotate site)','⚖️ Weigh-in + photo — Sat','👟 10k+ steps — all 7 days'];
+
+const WD=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+function currentWeekIdx(){
+  const t=today();
+  for(let i=0;i<PLAN.length;i++){
+    const days=PLAN[i].days;
+    if(t>=days[0].dt && t<=days[days.length-1].dt) return i;
+  }
+  return t<PLAN[0].days[0].dt?0:PLAN.length-1;
+}
+function badge(b){
+  if(b==='groc') return '<span class="pill groc">🛒 Groceries</span>';
+  if(b==='dose') return '<span class="pill dose">💉 Dose</span>';
+  if(b==='trav') return '<span class="pill trav">✈️ Boston</span>';
+  return '';
+}
+let ppl=parseInt(localStorage.getItem(KEY+'-ppl'))||1;
+function mealRow(tag,id,office){
+  const m=MEALS[id];
+  const x2=(ppl===2&&tag!=='S*')?'<span class="x2">×2</span>':'';
+  return `<div class="mrow"><span class="mt">${tag}</span><span class="mn">${m.n}${office?' <span class="muted">🏢</span>':''}${x2}<br><span class="muted" style="font-size:11px">${m.d}</span></span><span class="mc">${m.c}·${m.p}g</span></div>`;
+}
+let mealWeek=currentWeekIdx();
+function renderMeals(){
+  const wk=PLAN[mealWeek];
+  weekTitle.textContent=`${wk.label} · ${wk.range}`;
+  weekSub.textContent=wk.proteins+(ppl===2?' · cook lunch & dinner ×2, snacks ×1':'');
+  const el=document.getElementById('weekDays'); el.innerHTML='';
+  const t=today();
+  wk.days.forEach(day=>{
+    const dt=d(day.dt);
+    const tot=['l','s','dn'].reduce((a,k)=>{const m=MEALS[day[k]];return m?[a[0]+m.c,a[1]+m.p]:a;},[0,0]);
+    const div=document.createElement('div');
+    div.className='day'+(day.dt===t?' today':'');
+    div.innerHTML=`<div class="dh"><span>${WD[dt.getDay()]} ${dt.getDate()}${day.dt===t?' · Today':''}</span>${badge(day.b)}</div>
+      ${mealRow('L',day.l,day.o)}${mealRow('D',day.dn)}
+      <div class="snk">${mealRow('S*',day.s)}</div>
+      <div class="dtotal">~${tot[0].toLocaleString()} cal · ${tot[1]}g protein${ppl===2?' · per person':''}</div>`;
+    el.appendChild(div);
+  });
+}
+function renderPplSegs(){
+  ['pplSegMeals','pplSegTodos'].forEach(segId=>{
+    const el=document.getElementById(segId); el.innerHTML='';
+    [[1,'1 person'],[2,'2 people']].forEach(([n,lbl])=>{
+      const b=document.createElement('button');
+      b.textContent=lbl; b.className=ppl===n?'active':'';
+      b.onclick=()=>setPpl(n);
+      el.appendChild(b);
+    });
+  });
+}
+function setPpl(n){
+  ppl=n; localStorage.setItem(KEY+'-ppl',n);
+  renderPplSegs(); renderMeals(); renderTodos();
+}
+function renderSeg(segId,onPick,active){
+  const el=document.getElementById(segId); el.innerHTML='';
+  PLAN.forEach((wk,i)=>{
+    const b=document.createElement('button');
+    b.textContent=wk.label; b.className=i===active?'active':'';
+    b.onclick=()=>{onPick(i);};
+    el.appendChild(b);
+  });
+}
+let todoWeek=currentWeekIdx();
+function renderTodos(){
+  grocSub.textContent='· '+PLAN[todoWeek].label+(ppl===2?' · for two (snacks ×1)':'');
+  let rhythm=[...RHYTHM];
+  if(todoWeek===1) rhythm=['🛒 Sat night — groceries + cook for the week','✈️ Boston Mon–Thu — salads / steak & potatoes out, pack shakes','🏋️ Hotel gym at night — hit what you can','🏃 Run — Sat','💉 Reta dose — Thu (rotate site)','⚖️ Weigh-in + photo — Sat','👟 10k+ steps — all 7 days, walk Boston'];
+  renderChecks('rhythmChecks',rhythm,'rhythm-w'+todoWeek);
+  const list=GROCERIES[todoWeek].map(g=>{const q=ppl===2?g[2]:g[1];return q?`${g[0]} — ${q}`:g[0];});
+  renderChecks('grocChecks',list,'groc-w'+todoWeek);
+}
+function pickMealWeek(i){ mealWeek=i; renderSeg('weekSeg',pickMealWeek,i); renderMeals(); }
+function pickTodoWeek(i){ todoWeek=i; renderSeg('todoSeg',pickTodoWeek,i); renderTodos(); }
+
+/* ---------- EXPORT / IMPORT ---------- */
+function exportData(){
+  const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='summercut-backup-'+today()+'.json';
+  a.click();
+}
+function importData(ev){
+  const f=ev.target.files[0]; if(!f) return;
+  const r=new FileReader();
+  r.onload=()=>{try{
+    state=JSON.parse(r.result); state.logs=state.logs||[]; state.checks=state.checks||{}; save();
+    renderLog(); renderStats(); drawChart(); renderSupps(); renderTodos();
+    alert('Imported ✓');
+  }catch(e){alert('Import failed: '+e.message)}};
+  r.readAsText(f);
+}
+
+/* ---------- INIT ---------- */
+const savedTheme=localStorage.getItem(KEY+'-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
+applyTheme(savedTheme);
+document.getElementById('fDate').value=today();
+renderLog(); renderStats(); renderSupps();
+pickMealWeek(mealWeek); pickTodoWeek(todoWeek); renderPplSegs();
+window.addEventListener('resize',drawChart);
+if('serviceWorker' in navigator && location.protocol==='https:') navigator.serviceWorker.register('sw.js');
+</script>
+</body>
+</html>
