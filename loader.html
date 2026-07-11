@@ -63,6 +63,7 @@ async function open_(key, remember){
     localStorage.setItem('summercut-key', btoa(String.fromCharCode(...new Uint8Array(raw))));
   }
   const html = new TextDecoder().decode(pt);
+  try{ sessionStorage.setItem('sc-src', html); }catch(e){} // plaintext source for the in-app Garage editor
   document.open(); document.write(html); document.close();
 }
 window.addEventListener('DOMContentLoaded', async () => {
