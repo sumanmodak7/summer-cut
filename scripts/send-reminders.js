@@ -24,7 +24,7 @@ const WORKOUT = [
 ];
 
 const msg = FIXED[process.env.SCHEDULE] ||
-  { title: '🏋️ Tonight', body: WORKOUT[new Date().getDay()] };
+  { title: '🏋️ Today', body: WORKOUT[new Date().getDay()] };
 
 Promise.allSettled(subs.map(s => webpush.sendNotification(s, JSON.stringify(msg))))
   .then(rs => {
