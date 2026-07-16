@@ -10,8 +10,8 @@ if (!subs.length) { console.log('no subscribers yet'); process.exit(0); }
 webpush.setVapidDetails('mailto:smodak@turnriver.com', process.env.VAPID_PUBLIC, process.env.VAPID_PRIVATE);
 
 const FIXED = {
-  '0 13 * * 6': { title: '⚖️ Weigh-in day', body: 'Same scale, same time. Log it — Omega precision, Rolex patience.' },
-  '0 23 * * 4': { title: '💉 Reta day', body: 'Tonight is the dose — rotate the site. Hydrate hard.' }
+  '0 15 * * 6': { title: '⚖️ Weigh-in day', body: 'Same scale, same time. Log it — Omega precision, Rolex patience.' },
+  '0 1 * * 5':  { title: '💉 Reta day', body: 'Tonight is the dose — rotate the site. Hydrate hard.' }
 };
 const WORKOUT = [
   'Light day — easy walk + mobility, still hit 10k',
