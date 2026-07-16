@@ -1,0 +1,24 @@
+name: reminders
+on:
+  schedule:
+    - cron: '0 13 * * 6'  # Sat 8:00 AM CT — weigh-in
+    - cron: '0 23 * * 4'  # Thu 6:00 PM CT — Reta dose
+    - cron: '0 22 * * *'  # Daily 5:00 PM CT — workout
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    env:
+      TZ: America/Chicago
+      SCHEDULE: ${{ github.event.schedule }}
+      VAPID_PUBLIC: BLIROQ11ivAIBgPlM4cNqmDzBe_e6v94HcZ7PpxoHaDG26d8Jp3w2Y1ibKVegMo9YLqSjqZUb9JMpwcF97rxQ7w
+      VAPID_PRIVATE: ${{ secrets.VAPID_PRIVATE }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install web-push@3 --no-fund --no-audit
+      - run: node scripts/send-reminders.js

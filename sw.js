@@ -1,4 +1,4 @@
-const CACHE = 'summercut-v2';
+const CACHE = 'summercut-v3';
 const ASSETS = ['./', './index.html', './manifest.json', './icon-180.png', './icon-512.png'];
 
 self.addEventListener('install', e => {
@@ -11,6 +11,20 @@ self.addEventListener('activate', e => {
   ));
   self.clients.claim();
 });
+self.addEventListener('push', e => {
+  let d = {}; try { d = e.data.json(); } catch (err) {}
+  e.waitUntil(self.registration.showNotification(d.title || 'Summer Cut', {
+    body: d.body || '',
+    icon: 'icon-180.png',
+    badge: 'icon-180.png'
+  }));
+});
+self.addEventListener('notificationclick', e => {
+  e.notification.close();
+  e.waitUntil(clients.matchAll({ type: 'window', includeUncontrolled: true })
+    .then(ws => ws.length ? ws[0].focus() : clients.openWindow('./')));
+});
+
 // network-first so plan updates land; falls back to cache offline
 self.addEventListener('fetch', e => {
   e.respondWith(
