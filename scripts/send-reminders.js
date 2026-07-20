@@ -14,13 +14,13 @@ const FIXED = {
   '0 1 * * 5':  { title: '💉 Reta day', body: 'Tonight is the dose — rotate the site. Hydrate hard.' }
 };
 const WORKOUT = [
-  'Light day — easy walk + mobility, still hit 10k',
-  'Chest day — bench, incline DB, fly, dips',
-  'Legs day — press, quad machine, hamstring machine, calves',
-  'Back day — pulldown, row, pull-ups, face pulls',
-  'Incline walk — 45–60 min, zone 2',
-  'Arms + shoulders — OHP, laterals, curls, triceps',
-  'Run day — VO2. Lights out and away we go 🏁'
+  'Walk day — incline + outdoor, still hit 10k',
+  'Chest day — bench, incline DB, fly, dips (+ walks)',
+  'Legs day — press, quad machine, hamstring machine, calves (+ walks)',
+  'Back day — pulldown, row, pull-ups, face pulls (+ walks)',
+  'Walk day — incline + outdoor, zone 2',
+  'Arms + shoulders — OHP, laterals, curls, triceps (+ walks)',
+  'Run day — VO2 + outdoor walk. Lights out and away we go 🏁'
 ];
 
 const msg = FIXED[process.env.SCHEDULE] ||
