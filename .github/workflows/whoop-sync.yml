@@ -1,0 +1,28 @@
+name: whoop-sync
+on:
+  schedule:
+    - cron: '0 13,16,19 * * *' # 6:00a / 9:00a / 12:00p PT — retries in case phone hasn't synced yet
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency: whoop-sync
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    env:
+      WHOOP_CLIENT_ID: ${{ secrets.WHOOP_CLIENT_ID }}
+      WHOOP_CLIENT_SECRET: ${{ secrets.WHOOP_CLIENT_SECRET }}
+      WHOOP_KEY: ${{ secrets.WHOOP_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: node scripts/whoop-sync.js
+      # whoop-tokens.enc rotates every run — committing it is mandatory or the chain dies
+      - run: |
+          git config user.name "whoop-sync"
+          git config user.email "actions@users.noreply.github.com"
+          git add whoop-data.json whoop-tokens.enc
+          git diff --cached --quiet || git commit -m "Whoop sync"
+          git pull --rebase && git push
