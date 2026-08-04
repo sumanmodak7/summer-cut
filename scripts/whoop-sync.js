@@ -56,15 +56,17 @@ async function main() {
 
   const cycById = {};
   for (const c of cyc.records) cycById[c.id] = c;
-  const locDate = c => { // cycle start shifted by its timezone_offset ("-07:00") → local calendar date
-    if (!c) return null;
-    const off = c.timezone_offset || '+00:00';
+  // Date a recovery by when it was scored (that morning), shifted to the cycle's local
+  // timezone — NOT by cycle start, which is sleep onset the night before.
+  const locDate = x => {
+    const c = cycById[x.cycle_id];
+    const off = (c && c.timezone_offset) || '+00:00';
     const min = (off[0] === '-' ? -1 : 1) * ((+off.slice(1, 3)) * 60 + (+off.slice(4, 6)));
-    return new Date(new Date(c.start).getTime() + min * 60000).toISOString().slice(0, 10);
+    return new Date(new Date(x.created_at).getTime() + min * 60000).toISOString().slice(0, 10);
   };
 
   const hist = rec.records.filter(x => x.score)
-    .map(x => ({ d: locDate(cycById[x.cycle_id]), s: Math.round(x.score.recovery_score) }));
+    .map(x => ({ d: locDate(x), s: Math.round(x.score.recovery_score) }));
   const R = rec.records.find(x => x.score);
   const S = slp.records.find(x => x.score && !x.nap);
   const st = S && S.score.stage_summary;
