@@ -3,6 +3,7 @@ on:
   schedule:
     - cron: '0 15 * * 6'  # Sat 8:00 AM PT — weigh-in
     - cron: '0 1 * * 5'   # Thu 6:00 PM PT — Reta dose (Fri 01:00 UTC)
+    - cron: '0 1 * * 2'   # Mon 6:00 PM PT — Reta half-dose (Tue 01:00 UTC), from Aug 10
     - cron: '30 13 * * *' # Daily 6:30 AM PT — workout
   workflow_dispatch:
 permissions:

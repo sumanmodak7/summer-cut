@@ -9,9 +9,19 @@ if (!subs.length) { console.log('no subscribers yet'); process.exit(0); }
 
 webpush.setVapidDetails('mailto:smodak@turnriver.com', process.env.VAPID_PUBLIC, process.env.VAPID_PRIVATE);
 
+const localDate = () => new Date(Date.now() - 7 * 3600e3).toISOString().slice(0, 10); // US Pacific
+
+// Half-dose 2×/wk (Mon + Thu) from Aug 10; full weekly dose before that.
+const reta = {
+  title: '💉 Reta day',
+  body: localDate() >= '2026-08-10'
+    ? 'Half-dose tonight — rotate the site. Hydrate hard.'
+    : 'Tonight is the dose — rotate the site. Hydrate hard.'
+};
 const FIXED = {
   '0 15 * * 6': { title: '⚖️ Weigh-in day', body: 'Same scale, same time. Log it — Omega precision, Rolex patience.' },
-  '0 1 * * 5':  { title: '💉 Reta day', body: 'Tonight is the dose — rotate the site. Hydrate hard.' }
+  '0 1 * * 5':  reta, // Thu 6pm PT
+  '0 1 * * 2':  reta  // Mon 6pm PT
 };
 // Per-date overrides mirror TRAIN in app-src.html; fall back to the weekday default below.
 const TRAIN = {
@@ -39,8 +49,6 @@ const WORKOUT = [
   'Arms + shoulders — OHP, laterals, curls, triceps (+ walks)',
   'Run day — VO2 + outdoor walk. Lights out and away we go 🏁'
 ];
-const localDate = () => new Date(Date.now() - 7 * 3600e3).toISOString().slice(0, 10); // US Pacific
-
 const msg = FIXED[process.env.SCHEDULE] ||
   { title: '🏋️ Today', body: TRAIN[localDate()] || WORKOUT[new Date().getDay()] };
 
