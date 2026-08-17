@@ -25,29 +25,19 @@ const FIXED = {
 };
 // Per-date overrides mirror TRAIN in app-src.html; fall back to the weekday default below.
 const TRAIN = {
-  '2026-08-03': 'Chest — bench, incline DB, fly, dips (+ incline & outdoor walk)',
-  '2026-08-04': 'Back — pulldown, row, pull-ups, face pulls (+ incline & outdoor walk)',
-  '2026-08-05': 'Arms + shoulders — OHP, laterals, curls, triceps (+ incline & outdoor walk)',
-  '2026-08-06': 'Legs — press, quad machine, hamstring machine, calves (+ incline & outdoor walk)',
-  '2026-08-07': 'Travel — outdoor walks only, AM + PM',
-  '2026-08-08': 'Travel — outdoor walks only, AM + PM',
-  '2026-08-09': 'Travel — outdoor walks only, AM + PM',
-  '2026-08-10': 'Travel home — outdoor walks, then shop tonight 🛒',
-  '2026-08-11': '⚡ Chest + 2× incline walks. OMAD.',
-  '2026-08-12': '⚡ Back + 2× incline walks. OMAD.',
-  '2026-08-13': '⚡ Arms + shoulders + 2× incline walks. OMAD.',
-  '2026-08-14': '⚡ Legs + 2× incline walks. OMAD.',
-  '2026-08-15': '⚡ Run day (VO2) + 2× incline walks. OMAD.',
-  '2026-08-16': '⚡ Chest + 2× incline walks. OMAD — closes the super-send.'
+  // knee still healing — walk these Saturdays instead of running
+  '2026-08-22': 'Double walk day — knee still healing, no run yet',
+  '2026-08-29': 'Double walk day — knee still healing, no run yet'
 };
+// Sun–Sat weekly rhythm (v2) — mirrors DEF in app-src.html
 const WORKOUT = [
-  'Walk day — incline + outdoor, still hit 10k',
-  'Chest day — bench, incline DB, fly, dips (+ walks)',
-  'Legs day — press, quad machine, hamstring machine, calves (+ walks)',
-  'Back day — pulldown, row, pull-ups, face pulls (+ walks)',
-  'Walk day — incline + outdoor, zone 2',
-  'Arms + shoulders — OHP, laterals, curls, triceps (+ walks)',
-  'Run day — VO2 + outdoor walk. Lights out and away we go 🏁'
+  'Single walk / rest day — still hit 10k',
+  'Chest + double walk — bench, incline DB, fly, dips',
+  'Back + single walk — pulldown, row, pull-ups, face pulls',
+  'Arms + shoulders + single walk — OHP, laterals, curls, triceps',
+  'Legs + single walk — press, quad machine, hamstring machine, calves',
+  'Double walk day — outdoor AM + incline, no lift',
+  'Run day — VO2. Lights out and away we go 🏁'
 ];
 const msg = FIXED[process.env.SCHEDULE] ||
   { title: '🏋️ Today', body: TRAIN[localDate()] || WORKOUT[new Date().getDay()] };
