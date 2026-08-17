@@ -25,9 +25,26 @@ const FIXED = {
 };
 // Per-date overrides mirror TRAIN in app-src.html; fall back to the weekday default below.
 const TRAIN = {
-  // knee still healing — walk these Saturdays instead of running
+  // knee healing — no running until the ramp starts Sep 19
   '2026-08-22': 'Double walk day — knee still healing, no run yet',
-  '2026-08-29': 'Double walk day — knee still healing, no run yet'
+  '2026-08-29': 'Double walk day — knee still healing, no run yet',
+  '2026-09-12': 'Double walk day — last one before the run ramp',
+  // travel — walks only
+  '2026-09-04': 'Nashville — outdoor walks, AM + PM',
+  '2026-09-05': 'Nashville — outdoor walks, AM + PM',
+  '2026-09-06': 'Nashville — outdoor walks, AM + PM',
+  '2026-09-07': 'Nashville — outdoor walks, then shop tomorrow 🛒',
+  '2026-10-13': 'Conference — outdoor walks, AM + PM',
+  '2026-10-14': 'Conference — outdoor walks, AM + PM',
+  '2026-10-15': 'Conference — outdoor walks, AM + PM',
+  '2026-10-18': 'Retreat — outdoor walks, AM + PM',
+  '2026-10-19': 'Retreat — outdoor walks, AM + PM',
+  '2026-10-20': 'Retreat — outdoor walks, AM + PM',
+  // return-to-run ramp
+  '2026-09-19': '🏃 Walk-run wk 1 — 6 × (1 min jog / 2 min walk). Easy does it.',
+  '2026-09-26': '🏃 Walk-run wk 2 — 6 × (2 min jog / 2 min walk)',
+  '2026-10-03': '🏃 Walk-run wk 3 — 5 × (3 min jog / 2 min walk)',
+  '2026-10-10': '🏃 First continuous run — 20 min easy, conversational'
 };
 // Sun–Sat weekly rhythm (v2) — mirrors DEF in app-src.html
 const WORKOUT = [
