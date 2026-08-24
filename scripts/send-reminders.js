@@ -25,45 +25,45 @@ const FIXED = {
 };
 // Per-date overrides mirror TRAIN in app-src.html — update both together.
 const TRAIN = {
-  // 4-week run on-ramp — no running since Aug 1 (knee) + calf history. Duration ramps, not just the ratio.
+  // ⚽ the five booked soccer Thursdays
+  '2026-08-27': '⚽ SOCCER — pogo hops before, electrolytes at half',
+  '2026-09-03': '⚽ SOCCER — pogo hops before, electrolytes at half',
+  '2026-09-10': '⚽ SOCCER — pogo hops before, electrolytes at half',
+  '2026-09-17': '⚽ SOCCER — pogo hops before, electrolytes at half',
+  '2026-09-24': '⚽ SOCCER — last booked one. Make it count.',
+  // 4-week run on-ramp on the Sun/Tue/Sat run days — 55 → 90 → 105 → 110 → 120 min/wk
   '2026-08-23': 'Double walk — ramp starts Tuesday. Knee gets one more day.',
-  '2026-08-25': '🏋️ Push + 🏃 25 min run-walk — 4 min jog / 2 min walk. Zone 2.',
-  '2026-08-26': '🏃 30 min run-walk — 4 min jog / 2 min walk',
-  '2026-08-30': '🏃 35 min run-walk — 6 min jog / 2 min walk',
-  '2026-09-01': '🏋️ Push + 🏃 25 min run-walk — 6 / 2',
-  '2026-09-02': '🏃 30 min run-walk — 6 / 2',
-  '2026-09-08': '🏋️ Push + 🏃 30 min run-walk — 9 min jog / 1 min walk',
-  '2026-09-09': '🏃 35 min run-walk — 9 / 1',
-  '2026-09-13': '🏃 45 min continuous — first one. Conversational the whole way.',
-  '2026-09-16': '🏃 35 min easy — Zone 2',
-  // travel — walks only, no gym
+  '2026-08-25': '🏠 Home abs + 🏃 25 min run-walk — 4 min jog / 2 min walk',
+  '2026-08-29': '🏃 30 min run-walk — 4 / 2. Zone 2 the whole way.',
+  '2026-08-30': '🏃 30 min run-walk — 6 min jog / 2 min walk',
+  '2026-09-01': '🏠 Home abs + 🏃 25 min run-walk — 6 / 2',
+  '2026-09-05': '🏃 35 min run-walk — 6 / 2',
+  '2026-09-06': '🏃 35 min run-walk — 9 min jog / 1 min walk',
+  '2026-09-08': '🏠 Home abs + 🏃 30 min run-walk — 9 / 1',
+  '2026-09-12': '🏃 40 min run-walk — 9 / 1',
+  '2026-09-13': '🏃 35 min continuous — first one. Conversational.',
+  '2026-09-15': '🏠 Home abs + 🏃 30 min easy',
+  '2026-09-19': '🏃 45 min easy — Zone 2',
+  // ✈️ travel — no gym, runs and walks still work
   '2026-09-04': 'Nashville — outdoor walks, AM + PM',
-  '2026-09-05': 'Nashville — outdoor walks, AM + PM',
-  '2026-09-06': 'Nashville — 🏃 40 min run-walk outdoors, 9 / 1',
   '2026-09-07': 'Nashville — outdoor walks, AM + PM',
-  '2026-10-13': 'Conference — 🏃 30 min easy + outdoor walks',
-  '2026-10-14': 'Conference — 🏃 40 min easy + outdoor walks',
-  '2026-10-15': 'Conference — 🏃 4 × 4 min hard / 3 easy. Substitutes for soccer this week.',
-  '2026-10-18': 'Retreat — 🏃 40 min easy + outdoor walks',
+  '2026-10-14': 'Conference — 🏃 30 min easy + outdoor walks',
   '2026-10-19': 'Retreat — outdoor walks, AM + PM',
-  '2026-10-20': 'Retreat — 🏃 30 min easy + outdoor walks',
-  // ✈️ Thailand Nov 18–28 — outdoor only, keep the base ticking
   '2026-11-18': 'Thailand — 🏃 30 min easy', '2026-11-19': 'Thailand — outdoor walks',
   '2026-11-20': 'Thailand — outdoor walks',  '2026-11-21': 'Thailand — 🏃 40 min easy',
-  '2026-11-22': 'Thailand — 🏃 50 min easy', '2026-11-23': 'Thailand — outdoor walks',
-  '2026-11-24': 'Thailand — 🏃 30 min easy', '2026-11-25': 'Thailand — 🏃 40 min easy',
-  '2026-11-26': 'Thailand — outdoor walks',  '2026-11-27': 'Thailand — outdoor walks',
-  '2026-11-28': 'Thailand — 🏃 50 min easy'
+  '2026-11-23': 'Thailand — outdoor walks',  '2026-11-25': 'Thailand — 🏃 30 min easy',
+  '2026-11-26': 'Thailand — outdoor walks',  '2026-11-27': 'Thailand — outdoor walks'
 };
-// Sun–Sat rhythm (v3, VO2max / soccer block) — mirrors DEF in app-src.html
+// Sun–Sat rhythm (v4, 2026-08-24) — mirrors DEF in app-src.html.
+// Gym Mon/Wed/Fri · Tue home abs + run · Thu soccer-or-4×4 · Sat/Sun runs.
 const WORKOUT = [
-  '🏃 50 min easy run — Zone 2, conversational. Biggest block of the week.',
-  '🏋️ Lower + calves + abs — press, quads, hams, calf raises slow. Double walk.',
-  '🏋️ Push + 🏃 30 min easy run — bench, incline DB, laterals',
-  '🏃 40 min easy run — Zone 2. Walk when the HR climbs.',
-  '⚽ SOCCER — the hard day. Pogo hops before, electrolytes at half.',
-  '🏋️ Pull + double walk — pulldown, row, pull-ups, curls',
-  '🦵 Calves + plyo, 15 min — light. Double walk.'
+  '🏃 40 min easy run — Zone 2, conversational',
+  '🏋️ GYM: lower + calves — press, quads, hams, slow calf raises. Double walk.',
+  '🏠 Home abs + 🏃 30 min easy run — floor work, pogo hops',
+  '🏋️ GYM: push — bench, incline DB, laterals, dips',
+  '🏃 4 × 4 min hard / 3 easy — replaces soccer this week',
+  '🏋️ GYM: pull — pulldown, row, pull-ups, curls. Double walk.',
+  '🏃 50 min long easy run — biggest Zone 2 block of the week'
 ];
 const msg = FIXED[process.env.SCHEDULE] ||
   { title: '🏋️ Today', body: TRAIN[localDate()] || WORKOUT[new Date().getDay()] };
