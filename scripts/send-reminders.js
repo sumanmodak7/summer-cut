@@ -23,38 +23,47 @@ const FIXED = {
   '0 1 * * 5':  reta, // Thu 6pm PT
   '0 1 * * 2':  reta  // Mon 6pm PT
 };
-// Per-date overrides mirror TRAIN in app-src.html; fall back to the weekday default below.
+// Per-date overrides mirror TRAIN in app-src.html — update both together.
 const TRAIN = {
-  // knee healing — no running until the ramp starts Sep 19
-  '2026-08-22': 'Double walk day — knee still healing, no run yet',
-  '2026-08-29': 'Double walk day — knee still healing, no run yet',
-  '2026-09-12': 'Double walk day — last one before the run ramp',
-  // travel — walks only
+  // 4-week run on-ramp — no running since Aug 1 (knee) + calf history. Duration ramps, not just the ratio.
+  '2026-08-23': 'Double walk — ramp starts Tuesday. Knee gets one more day.',
+  '2026-08-25': '🏋️ Push + 🏃 25 min run-walk — 4 min jog / 2 min walk. Zone 2.',
+  '2026-08-26': '🏃 30 min run-walk — 4 min jog / 2 min walk',
+  '2026-08-30': '🏃 35 min run-walk — 6 min jog / 2 min walk',
+  '2026-09-01': '🏋️ Push + 🏃 25 min run-walk — 6 / 2',
+  '2026-09-02': '🏃 30 min run-walk — 6 / 2',
+  '2026-09-08': '🏋️ Push + 🏃 30 min run-walk — 9 min jog / 1 min walk',
+  '2026-09-09': '🏃 35 min run-walk — 9 / 1',
+  '2026-09-13': '🏃 45 min continuous — first one. Conversational the whole way.',
+  '2026-09-16': '🏃 35 min easy — Zone 2',
+  // travel — walks only, no gym
   '2026-09-04': 'Nashville — outdoor walks, AM + PM',
   '2026-09-05': 'Nashville — outdoor walks, AM + PM',
-  '2026-09-06': 'Nashville — outdoor walks, AM + PM',
-  '2026-09-07': 'Nashville — outdoor walks, then shop tomorrow 🛒',
-  '2026-10-13': 'Conference — outdoor walks, AM + PM',
-  '2026-10-14': 'Conference — outdoor walks, AM + PM',
-  '2026-10-15': 'Conference — outdoor walks, AM + PM',
-  '2026-10-18': 'Retreat — outdoor walks, AM + PM',
+  '2026-09-06': 'Nashville — 🏃 40 min run-walk outdoors, 9 / 1',
+  '2026-09-07': 'Nashville — outdoor walks, AM + PM',
+  '2026-10-13': 'Conference — 🏃 30 min easy + outdoor walks',
+  '2026-10-14': 'Conference — 🏃 40 min easy + outdoor walks',
+  '2026-10-15': 'Conference — 🏃 4 × 4 min hard / 3 easy. Substitutes for soccer this week.',
+  '2026-10-18': 'Retreat — 🏃 40 min easy + outdoor walks',
   '2026-10-19': 'Retreat — outdoor walks, AM + PM',
-  '2026-10-20': 'Retreat — outdoor walks, AM + PM',
-  // return-to-run ramp
-  '2026-09-19': '🏃 Walk-run wk 1 — 6 × (1 min jog / 2 min walk). Easy does it.',
-  '2026-09-26': '🏃 Walk-run wk 2 — 6 × (2 min jog / 2 min walk)',
-  '2026-10-03': '🏃 Walk-run wk 3 — 5 × (3 min jog / 2 min walk)',
-  '2026-10-10': '🏃 First continuous run — 20 min easy, conversational'
+  '2026-10-20': 'Retreat — 🏃 30 min easy + outdoor walks',
+  // ✈️ Thailand Nov 18–28 — outdoor only, keep the base ticking
+  '2026-11-18': 'Thailand — 🏃 30 min easy', '2026-11-19': 'Thailand — outdoor walks',
+  '2026-11-20': 'Thailand — outdoor walks',  '2026-11-21': 'Thailand — 🏃 40 min easy',
+  '2026-11-22': 'Thailand — 🏃 50 min easy', '2026-11-23': 'Thailand — outdoor walks',
+  '2026-11-24': 'Thailand — 🏃 30 min easy', '2026-11-25': 'Thailand — 🏃 40 min easy',
+  '2026-11-26': 'Thailand — outdoor walks',  '2026-11-27': 'Thailand — outdoor walks',
+  '2026-11-28': 'Thailand — 🏃 50 min easy'
 };
-// Sun–Sat weekly rhythm (v2) — mirrors DEF in app-src.html
+// Sun–Sat rhythm (v3, VO2max / soccer block) — mirrors DEF in app-src.html
 const WORKOUT = [
-  'Single walk / rest day — still hit 10k',
-  'Chest + double walk — bench, incline DB, fly, dips',
-  'Back + single walk — pulldown, row, pull-ups, face pulls',
-  'Arms + shoulders + single walk — OHP, laterals, curls, triceps',
-  'Legs + single walk — press, quad machine, hamstring machine, calves',
-  'Double walk day — outdoor AM + incline, no lift',
-  'Run day — VO2. Lights out and away we go 🏁'
+  '🏃 50 min easy run — Zone 2, conversational. Biggest block of the week.',
+  '🏋️ Lower + calves + abs — press, quads, hams, calf raises slow. Double walk.',
+  '🏋️ Push + 🏃 30 min easy run — bench, incline DB, laterals',
+  '🏃 40 min easy run — Zone 2. Walk when the HR climbs.',
+  '⚽ SOCCER — the hard day. Pogo hops before, electrolytes at half.',
+  '🏋️ Pull + double walk — pulldown, row, pull-ups, curls',
+  '🦵 Calves + plyo, 15 min — light. Double walk.'
 ];
 const msg = FIXED[process.env.SCHEDULE] ||
   { title: '🏋️ Today', body: TRAIN[localDate()] || WORKOUT[new Date().getDay()] };
