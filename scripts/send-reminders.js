@@ -31,19 +31,20 @@ const TRAIN = {
   '2026-09-10': '⚽ SOCCER — pogo hops before, electrolytes at half',
   '2026-09-17': '⚽ SOCCER — pogo hops before, electrolytes at half',
   '2026-09-24': '⚽ SOCCER — last booked one. Make it count.',
-  // 4-week run on-ramp on the Sun/Tue/Sat run days — 55 → 90 → 105 → 110 → 120 min/wk
-  '2026-08-23': 'Double walk — ramp starts Tuesday. Knee gets one more day.',
-  '2026-08-25': '🏠 Home abs + 🏃 25 min run-walk — 4 min jog / 2 min walk',
-  '2026-08-29': '🏃 30 min run-walk — 4 / 2. Zone 2 the whole way.',
-  '2026-08-30': '🏃 30 min run-walk — 6 min jog / 2 min walk',
-  '2026-09-01': '🏠 Home abs + 🏃 25 min run-walk — 6 / 2',
-  '2026-09-05': '🏃 35 min run-walk — 6 / 2',
-  '2026-09-06': '🏃 35 min run-walk — 9 min jog / 1 min walk',
-  '2026-09-08': '🏠 Home abs + 🏃 30 min run-walk — 9 / 1',
-  '2026-09-12': '🏃 40 min run-walk — 9 / 1',
-  '2026-09-13': '🏃 35 min continuous — first one. Conversational.',
-  '2026-09-15': '🏠 Home abs + 🏃 30 min easy',
-  '2026-09-19': '🏃 45 min easy — Zone 2',
+  // 5-week run on-ramp on the Tue/Wed/Sat run days — 65 → 75 → 85 → 95 → 105 → 110 min/wk
+  '2026-08-25': '🏠 Abs + 🏃 20 min run-walk — 4 min jog / 2 min walk',
+  '2026-08-26': '🏋️ Push + 🏃 20 min run-walk — 4 / 2',
+  '2026-08-29': '🏃 25 min run-walk — 4 / 2. Zone 2 the whole way.',
+  '2026-09-01': '🏠 Abs + 🏃 25 min run-walk — 6 min jog / 2 min walk',
+  '2026-09-02': '🏋️ Push + 🏃 25 min run-walk — 6 / 2',
+  '2026-09-05': '🏃 25 min run-walk — 6 / 2',
+  '2026-09-08': '🏠 Abs + 🏃 25 min run-walk — 9 min jog / 1 min walk',
+  '2026-09-09': '🏋️ Push + 🏃 25 min run-walk — 9 / 1',
+  '2026-09-12': '🏃 35 min run-walk — 9 / 1',
+  '2026-09-15': '🏠 Abs + 🏃 30 min easy — first continuous week',
+  '2026-09-16': '🏋️ Push + 🏃 30 min easy',
+  '2026-09-19': '🏃 35 min continuous easy — conversational',
+  '2026-09-26': '🏃 45 min easy — Zone 2',
   // ✈️ travel — no gym, runs and walks still work
   '2026-09-04': 'Nashville — outdoor walks, AM + PM',
   '2026-09-07': 'Nashville — outdoor walks, AM + PM',
@@ -54,13 +55,13 @@ const TRAIN = {
   '2026-11-23': 'Thailand — outdoor walks',  '2026-11-25': 'Thailand — 🏃 30 min easy',
   '2026-11-26': 'Thailand — outdoor walks',  '2026-11-27': 'Thailand — outdoor walks'
 };
-// Sun–Sat rhythm (v4, 2026-08-24) — mirrors DEF in app-src.html.
-// Gym Mon/Wed/Fri · Tue home abs + run · Thu soccer-or-4×4 · Sat/Sun runs.
+// Sun–Sat rhythm (v5, 2026-08-24) — mirrors DEF in app-src.html.
+// Gym Mon/Wed/Fri · Tue home abs + run · Thu soccer-or-4×4 · Sat long run · SUNDAY REST.
 const WORKOUT = [
-  '🏃 40 min easy run — Zone 2, conversational',
+  '😴 Rest day — walk if you feel like it. This is where the adaptation happens.',
   '🏋️ GYM: lower + calves — press, quads, hams, slow calf raises. Double walk.',
-  '🏠 Home abs + 🏃 30 min easy run — floor work, pogo hops',
-  '🏋️ GYM: push — bench, incline DB, laterals, dips',
+  '🏠 Abs + 🏃 30 min easy — sit-ups, leg raises, twists, planks, pogo hops',
+  '🏋️ GYM: push + 🏃 30 min easy — bench, incline DB, laterals',
   '🏃 4 × 4 min hard / 3 easy — replaces soccer this week',
   '🏋️ GYM: pull — pulldown, row, pull-ups, curls. Double walk.',
   '🏃 50 min long easy run — biggest Zone 2 block of the week'
