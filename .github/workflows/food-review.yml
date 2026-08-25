@@ -1,0 +1,26 @@
+name: food-review
+on:
+  schedule:
+    - cron: '0 5 * * *'  # 10:00p PT — ⚠️ shifts to 9:00p when DST ends Nov 2026, same as the other crons
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency: food-review
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    env:
+      WHOOP_KEY: ${{ secrets.WHOOP_KEY }}
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      # exits 0 and changes nothing if either secret is missing or nothing is pending
+      - run: node scripts/food-auto-review.js
+      - run: |
+          git config user.name "food-review"
+          git config user.email "actions@users.noreply.github.com"
+          git add food-inbox.json
+          git diff --cached --quiet || (git commit -m "Food: auto-review" && git pull --rebase && git push)
