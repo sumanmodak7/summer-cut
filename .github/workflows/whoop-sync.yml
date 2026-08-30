@@ -2,6 +2,7 @@ name: whoop-sync
 on:
   schedule:
     - cron: '0 13,16,19 * * *' # 6:00a / 9:00a / 12:00p PT — retries in case phone hasn't synced yet
+    - cron: '30 4 * * *'       # 9:30p PT — catches the completed day; evening gym lands after the noon run
   workflow_dispatch:
 permissions:
   contents: write
