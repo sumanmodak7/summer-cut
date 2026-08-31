@@ -2,7 +2,8 @@ name: whoop-sync
 on:
   schedule:
     - cron: '0 13,16,19 * * *' # 6:00a / 9:00a / 12:00p PT — retries in case phone hasn't synced yet
-    - cron: '30 4 * * *'       # 9:30p PT — catches the completed day; evening gym lands after the noon run
+    - cron: '7 5 * * *'        # 10:07p PT — catches the completed day. Odd minute on purpose: :00/:30
+                               # slots are the most contended and GH delayed the old '30 4' by 6.5h.
   workflow_dispatch:
 permissions:
   contents: write
