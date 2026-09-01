@@ -11,17 +11,23 @@ webpush.setVapidDetails('mailto:smodak@turnriver.com', process.env.VAPID_PUBLIC,
 
 const localDate = () => new Date(Date.now() - 7 * 3600e3).toISOString().slice(0, 10); // US Pacific
 
-// Half-dose 2×/wk (Mon + Thu) from Aug 10; full weekly dose before that.
-const reta = {
-  title: '💉 Reta day',
-  body: localDate() >= '2026-08-10'
-    ? 'Half-dose tonight — rotate the site. Hydrate hard.'
-    : 'Tonight is the dose — rotate the site. Hydrate hard.'
+// Mirrors isDose() in app-src.html — update both together.
+//   Aug 10–27 : half-dose 2×/wk, Mon + Thu
+//   Aug 28–Sep 9 : 14-day washout, no doses (returns null → nothing is sent)
+//   from Sep 10 : one full 2 mg dose, Thursdays
+const retaMsg = () => {
+  const ds = localDate();
+  if (ds >= '2026-08-28' && ds < '2026-09-10') return null;
+  return {
+    title: '💉 Reta day',
+    body: (ds >= '2026-08-10' && ds < '2026-08-28')
+      ? 'Half-dose tonight — rotate the site. Hydrate hard.'
+      : 'Tonight is the dose — 2 mg, rotate the site. Hydrate hard.'
+  };
 };
 const FIXED = {
   '0 15 * * 6': { title: '⚖️ Weigh-in day', body: 'Same scale, same time. Log it — Omega precision, Rolex patience.' },
-  '0 1 * * 5':  reta, // Thu 6pm PT
-  '0 1 * * 2':  reta  // Mon 6pm PT
+  '0 1 * * 5':  retaMsg // Thu 6pm PT — the Mon cron was retired Sep 2026, back to weekly
 };
 // Per-date overrides mirror TRAIN in app-src.html — update both together.
 const TRAIN = {
@@ -66,8 +72,10 @@ const WORKOUT = [
   '🏋️ GYM: pull — pulldown, row, pull-ups, curls. Double walk.',
   '🏃 50 min long easy run — biggest Zone 2 block of the week'
 ];
-const msg = FIXED[process.env.SCHEDULE] ||
-  { title: '🏋️ Today', body: TRAIN[localDate()] || WORKOUT[new Date().getDay()] };
+let msg = FIXED[process.env.SCHEDULE];
+if (typeof msg === 'function') msg = msg();
+if (msg === null) { console.log('reta washout — no dose reminder tonight'); process.exit(0); }
+if (!msg) msg = { title: '🏋️ Today', body: TRAIN[localDate()] || WORKOUT[new Date().getDay()] };
 
 Promise.allSettled(subs.map(s => webpush.sendNotification(s, JSON.stringify(msg))))
   .then(rs => {
