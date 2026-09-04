@@ -53,6 +53,7 @@ const TRAIN = {
   '2026-09-26': '🏃 45 min easy — Zone 2',
   // ✈️ travel — no gym, runs and walks still work
   '2026-09-04': 'Nashville — outdoor walks, AM + PM',
+  '2026-09-06': '😴 Nashville — rest day. Walk if you feel like it.',
   '2026-09-07': 'Nashville — outdoor walks, AM + PM',
   '2026-10-14': 'Conference — 🏃 30 min easy + outdoor walks',
   '2026-10-19': 'Retreat — outdoor walks, AM + PM',
