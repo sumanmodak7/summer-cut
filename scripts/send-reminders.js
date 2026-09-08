@@ -34,7 +34,7 @@ const TRAIN = {
   // ⚽ the five booked soccer Thursdays
   '2026-08-27': '⚽ SOCCER — pogo hops before, electrolytes at half',
   '2026-09-03': '⚽ SOCCER — pogo hops before, electrolytes at half',
-  '2026-09-10': '⚽ SOCCER — pogo hops before, electrolytes at half',
+  '2026-09-10': '🌳 AM walk · ⚽ SOCCER tonight — pogo hops before, electrolytes at half · skip lunch, chicken dinner, 💉 Reta',
   '2026-09-17': '⚽ SOCCER — pogo hops before, electrolytes at half',
   '2026-09-24': '⚽ SOCCER — last booked one. Make it count.',
   // 5-week run on-ramp on the Tue/Wed/Sat run days — 65 → 75 → 85 → 95 → 105 → 110 min/wk
@@ -45,8 +45,12 @@ const TRAIN = {
   '2026-09-02': '🏋️ Push + 🏃 25 min run-walk — 6 / 2',
   '2026-09-05': '🏃 25 min run-walk — 6 / 2',
   // from Sep 8 the v6 layout takes over — Wednesday is PULL, so the on-ramp rides Tue/Sat only
-  '2026-09-08': '🏠 Abs + 🏃 25 min run-walk — 9 min jog / 1 min walk',
-  '2026-09-12': '🏃 35 min run-walk — 9 / 1',
+  // 🔥 Sep 8–13 debloat week — AM session + PM walk daily, push slides to Sunday
+  '2026-09-08': '⏳ FAST DAY · 🏃 25 min run-walk — 9 jog / 1 walk · 🌳 PM walk',
+  '2026-09-09': '🏋️ Pull — pulldown, row, pull-ups, face pulls, curls · 🌳 PM walk · salad + chicken',
+  '2026-09-11': '⏳ FAST DAY · 🏋️ Legs + calves — press, quads, hams, slow calf raises · 🌳 PM walk',
+  '2026-09-12': '🏃 35 min run-walk — 9 / 1 · 🌳 PM walk · dinner chicken only · ⚖️ weigh-in',
+  '2026-09-13': '🏋️ Push — bench, incline DB, laterals, fly, pushdown · 🌳 PM walk · small lunch + dinner',
   '2026-09-15': '🏠 Abs + 🏃 30 min easy — first continuous week',
   '2026-09-19': '🏃 40 min continuous easy — conversational',
   '2026-09-22': '🏠 Abs + 🏃 30 min easy',
