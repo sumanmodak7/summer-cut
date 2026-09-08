@@ -46,8 +46,8 @@ const TRAIN = {
   '2026-09-05': '🏃 25 min run-walk — 6 / 2',
   // from Sep 8 the v6 layout takes over — Wednesday is PULL, so the on-ramp rides Tue/Sat only
   // 🔥 Sep 8–13 debloat week — AM session + PM walk daily, push slides to Sunday
-  '2026-09-08': '⏳ FAST DAY · 🏃 25 min run-walk — 9 jog / 1 walk · 🌳 PM walk',
-  '2026-09-09': '🏋️ Pull — pulldown, row, pull-ups, face pulls, curls · 🌳 PM walk · salad + chicken',
+  '2026-09-08': '🏃 25 min run-walk — 9 jog / 1 walk · 🌳 PM walk · lunch only, no dinner',
+  '2026-09-09': '🏋️ Pull — pulldown, row, pull-ups, face pulls, curls · 🌳 PM walk · lunch only, no dinner',
   '2026-09-11': '⏳ FAST DAY · 🏋️ Legs + calves — press, quads, hams, slow calf raises · 🌳 PM walk',
   '2026-09-12': '🏃 35 min run-walk — 9 / 1 · 🌳 PM walk · dinner chicken only · ⚖️ weigh-in',
   '2026-09-13': '🏋️ Push — bench, incline DB, laterals, fly, pushdown · 🌳 PM walk · small lunch + dinner',
