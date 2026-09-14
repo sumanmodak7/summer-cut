@@ -22,7 +22,7 @@ const retaMsg = () => {
     title: '💉 Reta day',
     body: (ds >= '2026-08-10' && ds < '2026-08-28')
       ? 'Half-dose tonight — rotate the site. Hydrate hard.'
-      : 'Tonight is the dose — rotate the site. Hydrate hard.'
+      : 'Tonight is the dose — 3 mg, rotate the site. Hydrate hard.'
   };
 };
 const FIXED = {
