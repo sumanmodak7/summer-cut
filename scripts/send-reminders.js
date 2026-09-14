@@ -13,21 +13,21 @@ const localDate = () => new Date(Date.now() - 7 * 3600e3).toISOString().slice(0,
 
 // Mirrors isDose() in app-src.html — update both together.
 //   Aug 10–27 : half-dose 2×/wk, Mon + Thu
-//   Aug 28–Sep 9 : 14-day washout, no doses (returns null → nothing is sent)
-//   from Sep 10 : one full 2 mg dose, Thursdays
+//   Aug 28–Sep 12 : gap, no doses (returns null → nothing is sent). He skipped the Sep 10 restart.
+//   from Sep 13 : one full dose, SUNDAY nights — off soccer night, and he is re-titrating the mg
 const retaMsg = () => {
   const ds = localDate();
-  if (ds >= '2026-08-28' && ds < '2026-09-10') return null;
+  if (ds >= '2026-08-28' && ds < '2026-09-13') return null; // the gap ran Aug 28 – Sep 12
   return {
     title: '💉 Reta day',
     body: (ds >= '2026-08-10' && ds < '2026-08-28')
       ? 'Half-dose tonight — rotate the site. Hydrate hard.'
-      : 'Tonight is the dose — 2 mg, rotate the site. Hydrate hard.'
+      : 'Tonight is the dose — rotate the site. Hydrate hard.'
   };
 };
 const FIXED = {
   '0 15 * * 6': { title: '⚖️ Weigh-in day', body: 'Same scale, same time. Log it — Omega precision, Rolex patience.' },
-  '0 1 * * 5':  retaMsg // Thu 6pm PT — the Mon cron was retired Sep 2026, back to weekly
+  '0 1 * * 1':  retaMsg // Sun 6pm PT (Mon 01:00 UTC) — moved off Thursday so it misses soccer night
 };
 // Per-date overrides mirror TRAIN in app-src.html — update both together.
 const TRAIN = {
@@ -35,7 +35,7 @@ const TRAIN = {
   '2026-08-27': '⚽ SOCCER — pogo hops before, electrolytes at half',
   '2026-09-03': '⚽ SOCCER — pogo hops before, electrolytes at half',
   '2026-09-10': '🌳 AM walk · ⚽ SOCCER tonight — pogo hops before, electrolytes at half · skip lunch, chicken dinner, 💉 Reta',
-  '2026-09-17': '⚽ SOCCER — pogo hops before, electrolytes at half',
+  '2026-09-17': '🌳 AM walk · ⚽ SOCCER tonight — pogo hops before, electrolytes at half. Eat 2–3h before.',
   '2026-09-24': '⚽ SOCCER — last booked one. Make it count.',
   // 5-week run on-ramp on the Tue/Wed/Sat run days — 65 → 75 → 85 → 95 → 105 → 110 min/wk
   '2026-08-25': '🏠 Abs + 🏃 20 min run-walk — 4 min jog / 2 min walk',
@@ -51,8 +51,13 @@ const TRAIN = {
   '2026-09-11': '⏳ FAST DAY · 🏋️ Legs + calves — press, quads, hams, slow calf raises · 🌳 PM walk',
   '2026-09-12': '🏃 35 min run-walk — 9 / 1 · 🌳 PM walk · dinner chicken only · ⚖️ weigh-in',
   '2026-09-13': '🏋️ Push — bench, incline DB, laterals, fly, pushdown · 🌳 PM walk · small lunch + dinner',
-  '2026-09-15': '🏠 Abs + 🏃 30 min easy — first continuous week',
-  '2026-09-19': '🏃 40 min continuous easy — conversational',
+  // 🔁 v7 week — Mon recovery, 4 lifts, evenings back. Zone 2 is 118–137 bpm (max HR 196 confirmed).
+  '2026-09-14': '🚶 Recovery day — AM incline walk 45–60 min · PM outdoor walk. No lifting.',
+  '2026-09-15': '🏃 AM 3 mi easy — keep HR under 137 · PM light arms + calf protocol',
+  '2026-09-16': '🌳 AM walk · PM GYM: pull — pulldown, row, pull-ups, face pulls, curls',
+  '2026-09-18': '🏋️ AM GYM: push — bench, incline DB, laterals, fly, pushdown · 🌳 PM walk',
+  '2026-09-19': '🏃 AM 45 min easy (~4 mi) — cap it here, do not chase 5 · PM rest',
+  '2026-09-20': '🏋️ AM GYM: legs + calves — press, quads, hams, slow calf raises · 🌳 PM walk · 💉 Reta tonight',
   '2026-09-22': '🏠 Abs + 🏃 30 min easy',
   '2026-09-26': '🏃 45 min easy — Zone 2',
   // ✈️ travel — no gym, runs and walks still work
