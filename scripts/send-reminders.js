@@ -53,13 +53,11 @@ const TRAIN = {
   '2026-09-13': '🏋️ Push — bench, incline DB, laterals, fly, pushdown · 🌳 PM walk · small lunch + dinner',
   // 🔁 v7 week — Mon recovery, 4 lifts, evenings back. Zone 2 is 118–137 bpm (max HR 196 confirmed).
   '2026-09-14': '🚶 Recovery day — AM incline walk 45–60 min · PM outdoor walk. No lifting.',
-  '2026-09-15': '🏃 AM 3 mi easy — keep HR under 137 · PM light arms + calf protocol',
-  '2026-09-16': '🌳 AM walk · PM GYM: pull — pulldown, row, pull-ups, face pulls, curls',
+  '2026-09-15': '🏃 AM 2 mi easy — keep HR under 137 · PM light arms + calf protocol',
+  '2026-09-16': '🌳 AM walk · PM GYM: pull + 🏃 2 mi treadmill — HR under 137',
   '2026-09-18': '🏋️ AM GYM: push — bench, incline DB, laterals, fly, pushdown · 🌳 PM walk',
   '2026-09-19': '🏃 AM 45 min easy (~4 mi) — cap it here, do not chase 5 · PM rest',
   '2026-09-20': '🏋️ AM GYM: legs + calves — press, quads, hams, slow calf raises · 🌳 PM walk · 💉 Reta tonight',
-  '2026-09-22': '🏠 Abs + 🏃 30 min easy',
-  '2026-09-26': '🏃 45 min easy — Zone 2',
   // ✈️ travel — no gym, runs and walks still work
   '2026-09-04': 'Nashville — outdoor walks, AM + PM',
   '2026-09-06': '😴 Nashville — rest day. Walk if you feel like it.',
@@ -71,17 +69,17 @@ const TRAIN = {
   '2026-11-23': 'Thailand — outdoor walks',  '2026-11-25': 'Thailand — 🏃 30 min easy',
   '2026-11-26': 'Thailand — outdoor walks',  '2026-11-27': 'Thailand — outdoor walks'
 };
-// Sun–Sat rhythm (v5, 2026-08-24) — mirrors DEF in app-src.html.
-// Gym Mon/Wed/Fri · Tue home abs + run · Thu soccer-or-4×4 · Sat long run · SUNDAY REST.
-// Mirrors DEF in app-src.html (v6, morning-only PPL + 4 walk/run days) — update both together.
+// Sun–Sat rhythm (v7, 2026-09-16) — mirrors DEF in app-src.html. Update both together.
+// Sun legs + Reta · Mon RECOVERY (walks only) · Tue AM run + PM arms · Wed AM walk + PM pull ·
+// Thu soccer-or-4×4 · Fri AM push + PM walk · Sat long run. Zone 2 = 118–137 bpm (max HR 196).
 const WORKOUT = [
-  '🚶 Walk only — fasted day. 30–40 min easy, nothing structured.',
-  '🏋️ GYM: push — bench, incline DB, laterals, fly, pushdown',
-  '🏠 Abs + 🏃 35 min easy — leg raises, twists, planks, pogo hops',
-  '🏋️ GYM: pull — pulldown, row, pull-ups, face pulls, curls',
+  '🏋️ AM GYM: legs + calves — press, quads, hams, slow calf raises · 🌳 PM walk · 💉 Reta tonight',
+  '🚶 Recovery day — AM incline walk 45–60 min · PM outdoor walk. No lifting.',
+  '🏃 AM 25 min easy, HR under 137 · PM light arms + calf protocol',
+  '🌳 AM walk · PM GYM: pull — pulldown, row, pull-ups, face pulls, curls',
   '🏃 4 × 4 min hard / 3 easy — replaces soccer this week',
-  '🏋️ GYM: legs + calves — press, quads, hams, slow calf raises',
-  '🏃 50 min long easy run — biggest Zone 2 block of the week'
+  '🏋️ AM GYM: push — bench, incline DB, laterals, fly, pushdown · 🌳 PM walk',
+  '🏃 AM 45 min long easy run — biggest Zone 2 block of the week · PM rest'
 ];
 let msg = FIXED[process.env.SCHEDULE];
 if (typeof msg === 'function') msg = msg();
